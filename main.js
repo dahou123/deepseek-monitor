@@ -182,7 +182,20 @@ function saveSettings(k, interval, threshold, start) {
   if (threshold !== undefined) alertThreshold = threshold;
   if (start !== undefined) autoStart = start;
   fs.writeFileSync(stp(), JSON.stringify({apiKey, refreshInterval, alertThreshold, autoStart}), 'utf-8');
-  app.setLoginItemSettings({ openAtLogin: autoStart });
+  setAutoStart(autoStart);
+}
+
+function setAutoStart(enabled) {
+  try {
+    const startupDir = require('path').join(app.getPath('appData'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
+    const batPath = require('path').join(startupDir, 'DeepSeek Monitor.bat');
+    if (enabled) {
+      const content = '@echo off\ncd /d "' + __dirname + '"\nstart /min npm start\nexit';
+      require('fs').writeFileSync(batPath, content, 'utf-8');
+    } else {
+      if (require('fs').existsSync(batPath)) require('fs').unlinkSync(batPath);
+    }
+  } catch(e) { console.error('开机自启设置失败:', e.message); }
 }
 
 // ==================== 刷新 ====================
@@ -297,8 +310,7 @@ app.whenReady().then(() => {
   createTray();
   setupIPC();
   startAutoRefresh();
-  app.setLoginItemSettings({ openAtLogin: autoStart });
-  // 生成图标文件到项目目录，供桌面快捷方式使用
+  setAutoStart(autoStart);
   generateIconFile();
 });
 app.on('before-quit', () => { isQuitting = true; });
