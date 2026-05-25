@@ -1,0 +1,6 @@
+node_modules/
+*.log
+settings.json
+balance_history.json
+month_start.json
+icon.ico

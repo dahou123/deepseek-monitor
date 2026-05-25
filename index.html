@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>DeepSeek Monitor</title>
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+  <div class="window-glow"></div>
+  <div class="window-bg"></div>
+
+  <!-- 可拖拽区域 -->
+  <div class="drag-bar"></div>
+
+  <!-- 右上角 -->
+  <div class="window-controls">
+    <button id="closeBtn" class="ctrl-btn close" title="关闭">✕</button>
+  </div>
+
+  <div class="container">
+    <!-- 头部：logo + 标题 + 状态圆点 -->
+    <div class="header">
+      <div class="header-left">
+        <svg width="20" height="20" viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="#4F6BED"/><text x="14" y="19" text-anchor="middle" fill="white" font-size="15" font-weight="700">D</text></svg>
+        <span class="title">DeepSeek Monitor</span>
+        <span class="status-dot" id="statusDot"></span>
+      </div>
+    </div>
+
+    <!-- 余额 -->
+    <div class="balance-section">
+      <div class="balance-amount"><span class="currency">¥</span><span class="balance-num" id="balanceNum">--</span></div>
+      <div class="balance-meta">
+        <span id="balanceSub">启动后自动获取</span>
+        <span class="meta-sep">·</span>
+        <span id="lastUpdated">--</span>
+      </div>
+    </div>
+
+    <!-- 统计 -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-label">本月消费</div><div class="stat-value stat-month" id="monthlyConsumption">--</div></div>
+      <div class="stat-card"><div class="stat-label">今日消费</div><div class="stat-value stat-today" id="todayConsumption">--</div></div>
+    </div>
+
+    <!-- 图表 -->
+    <div class="chart-section">
+      <div class="chart-header"><span class="chart-title">每日消费</span></div>
+      <div id="chartContainer" class="chart-body"><div class="chart-empty">持续使用后将显示趋势</div></div>
+    </div>
+
+    <!-- 底部三个文字按钮 -->
+    <div class="footer">
+      <button id="refreshBtn" class="btn btn-primary">⟳ 刷新</button>
+      <button id="rechargeBtn" class="btn btn-accent">⊕ 充值</button>
+      <button id="settingsBtn" class="btn btn-secondary">⚙ 设置</button>
+    </div>
+  </div>
+
+  <!-- 设置面板 -->
+  <div class="overlay" id="settingsOverlay">
+    <div class="panel">
+      <div class="panel-hd"><span class="panel-title">设置</span><button id="settingsClose" class="ctrl-btn close">✕</button></div>
+      <div class="panel-bd">
+        <div class="fg">
+          <label class="fl">API Key</label>
+          <div class="iw"><input type="password" id="apiKeyInput" class="fi" placeholder="sk-xxx" /><button id="toggleKey" class="is">👁</button></div>
+        </div>
+        <div class="fg">
+          <label class="fl">刷新间隔</label>
+          <select id="refreshInterval" class="fs">
+            <option value="30">30 秒</option><option value="60" selected>60 秒</option>
+            <option value="120">2 分钟</option><option value="300">5 分钟</option>
+            <option value="600">10 分钟</option><option value="1800">30 分钟</option>
+            <option value="3600">1 小时</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="fl">余额提醒阈值</label>
+          <div class="threshold-row">
+            <input type="range" id="thresholdSlider" class="range" min="1" max="50" step="1" value="2" />
+            <span class="threshold-val" id="thresholdVal">¥2</span>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="checkbox-label">
+            <input type="checkbox" id="autoStartChk" />
+            <span class="checkbox-mark"></span>
+            开机自启
+          </label>
+        </div>
+        <button id="saveBtn" class="btn btn-primary save-btn">保存</button>
+        <div id="saveInd" class="save-ind">✓ 已保存</div>
+        <button id="exportBtn" class="btn btn-ghost">📥 导出 CSV</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/app.js"></script>
+</body>
+</html>
