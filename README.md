@@ -2,7 +2,7 @@
 
 Windows 桌面托盘工具，实时监控 DeepSeek API 账户余额和消费趋势。
 
-<img src="screenshot.png" width="380" alt="应用截图"/> ![Electron](https://img.shields.io/badge/Electron-33-blue) ![license](https://img.shields.io/badge/license-MIT-green)
+![Electron](https://img.shields.io/badge/Electron-33-blue) ![license](https://img.shields.io/badge/license-MIT-green) ![Windows](https://img.shields.io/badge/Windows-10+-blue)
 
 ## 功能
 
