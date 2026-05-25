@@ -4,3 +4,7 @@ settings.json
 balance_history.json
 month_start.json
 icon.ico
+start.bat
+start.vbs
+gen_icon.bat
+*.lnk
